@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import { Transition } from '@astro/transition'; // Import Transition from Astro
+
+type Props = {
+  imgURL: {
+    thumbnail: string;
+    bigShoe: string;
+  };
+  changeBigShoeImage: (url: string) => void;
+  bigShoeImg: string;
+}
+
+const { imgURL, changeBigShoeImage, bigShoeImg } = Astro.props;
+---
+
+<div class="shoes-container">
+    <!-- Shoe button with transition -->
+    <button data-id="shoe-1" class="shoe-button border-2 rounded-xl border-transparent cursor-pointer max-sm:flex-1">
+        <div class="flex justify-center items-center bg-card bg-center bg-cover sm:w-40 sm:h-40 rounded-xl max-sm:p-4">
+            <Image src={imgURL.thumbnail} alt="Shoe Collection" width={127} height={103} class="object-contain" />
+        </div>
+    </button>
+
+    <!-- Add more buttons with different data-id attributes as needed -->
+</div>
+
+<script>
+    const buttons = document.querySelectorAll('.shoe-button');
+    let activeButton = document.querySelector(`.shoe-button`);
+
+    // Function to update the border with transition
+    const changeBorder = (button) => {
+        if (activeButton) {
+            activeButton.classList.remove('border-coral-red');
+            activeButton.classList.add('border-transparent');
+        }
+
+        button.classList.remove('border-transparent');
+        button.classList.add('border-coral-red');
+        activeButton = button;  // Set the current button as active
+    };
+
+    // Add event listeners to all buttons
+    buttons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            changeBorder(event.currentTarget);
+        });
+    });
+
+    // Initial state - set the first button as active
+    changeBorder(buttons[0]);
+</script>
+
+<style>
+    /* Define transition styles */
+    .shoe-button {
+        transition: border 0.3s ease-in-out;  /* Border transition for smooth effect */
+    }
+
+    .border-coral-red {
+        border-color: coral;  /* Replace this with your coral red color */
+    }
+</style>

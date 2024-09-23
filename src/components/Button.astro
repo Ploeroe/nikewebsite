@@ -1,0 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import iconUrl from '../assets/icons/arrow-right.svg';
+
+type Props = {
+    label: string;
+};
+
+const { label } = Astro.props;
+---
+
+<button class="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none bg-coral-red rounded-full text-white border-coral-red">
+    {label}
+    <Image src={iconUrl} alt="Icon" class="ml-2 rounded-full w-5 h-5" />
+</button>
